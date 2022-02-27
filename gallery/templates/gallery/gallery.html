@@ -1,0 +1,15 @@
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h1>Gallery</h1>
+
+            <!-- PHOTO GALLERY -->
+            <section class="photo_gallery">
+                {% for gallery_image in gallery.images.all %}
+                <a href="{{ gallery_image.image.url }}"><img src="{{ gallery_image.image.url }}" alt="" title="" /></a>
+                {% endfor %}
+            </section>
+
+        </div>
+    </div>
+</div>
