@@ -1,4 +1,4 @@
-from gallery.views import add_gallery_view
+from .views import add_gallery_view
 
 from django.urls import include, path
 

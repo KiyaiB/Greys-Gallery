@@ -12,9 +12,7 @@ def add_gallery_view(request):
     if request.method == "GET":
         gallery_form = GalleryForm()
         formset = ImageFormSet(queryset=Image.objects.none())
-        return render(request, 'index.html', {"gallery_form":gallery_form, "formset":formset})
-    elif request.method == "POST":
-        pass
+        return render(request, 'gallery/index.html', {"gallery_form":gallery_form, "formset":formset})
     elif request.method == "POST":
         gallery_form = GalleryForm(request.POST)
         formset = ImageFormSet(request.POST, request.FILES)
@@ -32,5 +30,5 @@ def add_gallery_view(request):
 
 def gallery_view(request, pk):
     gallery = Gallery.objects.get(id=pk)
-    return render(request, 'gallery.html', {"gallery":gallery})
+    return render(request, 'gallery/gallery.html', {"gallery":gallery})
 
