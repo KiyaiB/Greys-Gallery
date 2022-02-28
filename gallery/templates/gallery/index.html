@@ -1,19 +1,24 @@
+<link rel="stylesheet" type="text/css" href="{'../gallery/css/bootstrap.min.css' }
+<link rel="stylesheet" type="text/css" href="{'../gallery/css/app.css' }
 {% load crispy_forms_tags %}
-
-<div class="row">
-    <div class="col-6 offset-md-3">
-        <form id="gallery_form" method="post" action="." enctype="multipart/form-data">
-
-            {% csrf_token %}
-
-            {{ gallery_form|crispy }}
-
-            {{ formset.management_form }}
-            {% for form in formset %}
-            {{ form|crispy }}
-            {% endfor %}
-
-            <input type="submit" name="submit" value="Submit" />
-        </form>
+<div class="container">
+    <div class="row">
+        <div class="col-6 offset-md-3">
+            <form id="gallery_form" method="post" action="." enctype="multipart/form-data">
+    
+                {% csrf_token %}
+    
+                {{ gallery_form|crispy }}
+                <div class="p-small-card">
+    
+                {{ formset.management_form }}
+                {% for form in formset %}
+                {{ form|crispy }}
+                {% endfor %}
+                </div>
+    
+                <input type="submit" name="submit" value="Submit" />
+            </form>
+        </div>
     </div>
 </div>
