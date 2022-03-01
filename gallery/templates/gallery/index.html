@@ -1,24 +1,35 @@
-<link rel="stylesheet" type="text/css" href="{'../gallery/css/bootstrap.min.css' }
-<link rel="stylesheet" type="text/css" href="{'../gallery/css/app.css' }
-{% load crispy_forms_tags %}
-<div class="container">
+{% extends 'base.html' %}
+{% load bootstrap5 %}
+{% block content %}
+<div style="background-color: #E5E5E5;">
+  <div class="container">
     <div class="row">
-        <div class="col-6 offset-md-3">
-            <form id="gallery_form" method="post" action="." enctype="multipart/form-data">
-    
-                {% csrf_token %}
-    
-                {{ gallery_form|crispy }}
-                <div class="p-small-card">
-    
-                {{ formset.management_form }}
-                {% for form in formset %}
-                {{ form|crispy }}
-                {% endfor %}
-                </div>
-    
-                <input type="submit" name="submit" value="Submit" />
-            </form>
+      <div class="col-md-2"></div>
+      <div class="col-md-8">
+        <div class="name">
+          <br>
+        <h2 class="text-center">Welcome to Greys-Gallery </h2>
+        <div class="text-center">
+          <a href="{% url 'allPhotos' %}" >
+            <button class="btn btn-lg btn-success">View All Photos</button>
+          </a>
+          <br>
         </div>
+      </div>
+      </div>
+      <div class="col-md-2"></div>
+    
     </div>
+    <br>
+    <div class="row" id="email">
+      <div class="col-md-2"></div>
+      <div class="col-md-8" style="margin-top: 1opx;">
+      </div>
+      <div class="col-md-2"></div>
+    
+    
+    </div>
+  </div>
 </div>
+
+{% endblock content %}
