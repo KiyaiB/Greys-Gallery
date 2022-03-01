@@ -11,6 +11,10 @@ This is an application that displays my photo gallery. Users can view photos by 
 ## Technologies Used
 
 Python
+
 Django
+
 Bootstrap
+
+##
 
