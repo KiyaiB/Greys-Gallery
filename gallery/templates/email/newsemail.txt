@@ -1,6 +1,0 @@
-Hello,
-
-We welcome you {{name}}, to Greys Gallery. We post photos everyday.
-
-Regards,
-Grey.
