@@ -1,3 +1,5 @@
+from django.forms import ModelForm
+from .models import Photo
 from tkinter import Label
 from django import forms
 
