@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'bootstrap5',
     'bootstrap3',
     'greysgallery',
-    'cloudinary'
+     'cloudinary',
 ]
 
 MIDDLEWARE = [
