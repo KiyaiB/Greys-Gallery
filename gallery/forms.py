@@ -1,17 +1,6 @@
+from tkinter import Label
 from django import forms
-from .models import Gallery, Category, Gallery, Image
 
-class GalleryForm(forms.ModelForm):
-    class Meta:
-        model = Gallery
-        fields = ('name',)
-
-class CategoryForm(forms.ModelForm):
-    class Meta:
-        model = Category
-        fields = ('name',)
-
-class ImageForm(forms.ModelForm):
-    class Meta:
-        model = Image
-        fields = ('image',)
+class NewsLetterForm(forms.Form):
+    your_name = forms.CharField(label='First Name',max_length=20)
+    email = forms.EmailField(Label='Email')
