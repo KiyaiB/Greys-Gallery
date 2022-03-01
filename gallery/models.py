@@ -6,9 +6,9 @@ from cloudinary.models import CloudinaryField
 # Create your models here.
 class personalInfo(models.Model):
     first_name = models.CharField(max_length=120)
-    last_name = models.Charfield(max_length=120)
+    last_name = models.CharField(max_length=120)
     email = models.EmailField()
-    phone_number = models.Charfield(max_length=15,blank=True)
+    phone_number = models.CharField(max_length=15,blank=True)
     
     def __str__(self):
         return self.first_name
