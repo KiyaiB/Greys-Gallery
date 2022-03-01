@@ -68,7 +68,7 @@ class Photo(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     image = CloudinaryField('image')
     posted_at = models.DateTimeField(auto_now_add=True)
-    owner = models.ForeignKey(PersonalInfo, on_delete=models.CASCADE)
+    owner = models.ForeignKey(personalInfo, on_delete=models.CASCADE)
 
     def save_photo(self):
         self.save()
