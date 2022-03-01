@@ -1,34 +1,66 @@
-from django.forms import modelformset_factory
-from .models import Gallery, Image
-from .forms import ImageForm, GalleryForm
-from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render,get_object_or_404,redirect
+from django.http import HttpResponse,Http404
+import datetime as dt
+from .models import Photo,Location,Category
+from django.core.exceptions import ObjectDoesNotExist
 
-# Create your views here.
+# Create your views here
+def home(request):
+  return render(request, 'index.html')
 
-def add_gallery_view(request):
-    ImageFormSet = modelformset_factory(Image, form=ImageForm, extra=3)
+def search_photos_category(request):
+  if 'photo' in request.GET and request.GET["photo"]:
+    search_term = request.GET.get("photo")
+    searched_photos = Photo.search_photos_by_category(search_term)
+    message = f"{search_term}"
 
-    if request.method == "GET":
-        gallery_form = GalleryForm()
-        formset = ImageFormSet(queryset=Image.objects.none())
-        return render(request, 'gallery/index.html', {"gallery_form":gallery_form, "formset":formset})
-    elif request.method == "POST":
-        gallery_form = GalleryForm(request.POST)
-        formset = ImageFormSet(request.POST, request.FILES)
+    return render(request, 'search.html', {"message":message,"photos":searched_photos})
 
-        if gallery_form.is_valid() and formset.is_valid():
-            gallery_obj = gallery_form.save()
+  else:
+    message = 'You have not searched for any term'
+    return render(request, 'search.html', {"message":message})
+  
+  
+def photos(request):
+  photos =Photo.objects.all().order_by("-posted_at")
+  location = Location.objects.all()
+  return render(request,'photos.html',{'photos':photos, 'location':location})
 
-            for form in formset.cleaned_data:
-                if form:
-                    image = form['image']
-                    Image.objects.create(image=image, gallery=gallery_obj)
-            return HttpResponseRedirect('/')
-        else:
-            print(gallery_form.errors, formset.errors)
 
-def gallery_view(request, pk):
-    gallery = Gallery.objects.get(id=pk)
-    return render(request, 'gallery/gallery.html', {"gallery":gallery})
+def detail(request,photo_id):
+  locations = Location.objects.all()
 
+  try:
+    photo = get_object_or_404(Photo, pk =photo_id)
+  except ObjectDoesNotExist:
+    raise Http404()
+  return render(request, 'photo.html', {'photo':photo,"locations":locations})
+
+  
+def filter_kigali_photos(request):
+  try:
+    photos = Photo.objects.filter(location =2)
+  except ObjectDoesNotExist:
+    raise Http404()
+  return render(request, 'locations.html', {'photos':photos})
+
+def filter_nairobi_photos(request):
+  try:
+    photos = Photo.objects.filter(location =1)
+  except ObjectDoesNotExist:
+    raise Http404()
+  return render(request, 'locations.html', {'photos':photos})
+
+def filter_kisumu_photos(request):
+  try:
+    photos = Photo.objects.filter(location =3)
+  except ObjectDoesNotExist:
+    raise Http404()
+  return render(request, 'locations.html', {'photos':photos})
+
+def filter_tokyo_photos(request):
+  try:
+    photos = Photo.objects.filter(location =4)
+  except ObjectDoesNotExist:
+    raise Http404()
+  return render(request, 'locations.html', {'photos':photos})
