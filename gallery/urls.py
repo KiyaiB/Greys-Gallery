@@ -1,7 +1,18 @@
-from .views import add_gallery_view
-
-from django.urls import include, path
+from django.urls import path
+from .import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
-    path('', add_gallery_view, name="index"),
+  path('',views.home,name='homePage'),
+  path('photos/',views.photos,name='allPhotos'),
+  path('photo/<int:photo_id>',views.detail,name='photos_item.detail'),
+  path('mombasa/',views.filter_kigali_photos,name='mombasa'),
+  path('nairobi/',views.filter_nairobi_photos,name='nairobi'),
+  path('johannesburg/',views.filter_kisumu_photos,name='johannesburg'),
+  path('narok/',views.filter_tokyo_photos,name='narok'),
+  path('search/',views.search_photos_category, name='searchPhotos')
 ]
+
+if settings.DEBUG:
+  urlpatterns+=static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
