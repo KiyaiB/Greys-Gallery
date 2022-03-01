@@ -1,8 +1,7 @@
 from django.contrib import admin
 from . models import personalInfo, Category, Location, Photo
-
-
-# Register your models here.
+ 
+ # Register your models here.
 
 admin.site.register(personalInfo)
 admin.site.register(Category)

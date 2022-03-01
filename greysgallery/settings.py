@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'bootstrap5',
     'bootstrap3',
     'greysgallery',
-     'cloudinary',
+    'cloudinary',
+    'cloudinary_storage'
 ]
 
 MIDDLEWARE = [
@@ -135,5 +136,15 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
 MEDIA_URL = '/media/'
 Media_ROOT = os.path.join(BASE_DIR, 'media')
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+CLOUDINARY_STORAGE = {
+# copied form dasshboard
+    'CLOUD_NAME': 'greyzgyzer',
+    'API_KEY': '411937695696693',
+    'API_SECRET': 'rGIIGGRsK_5_Pz9e4ijR0Vy67rc',
+}

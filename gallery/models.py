@@ -1,4 +1,4 @@
-from unicodedata import category
+# from unicodedata import category
 from django.db import models
 import datetime as dt
 from cloudinary.models import CloudinaryField
