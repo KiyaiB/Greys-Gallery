@@ -16,5 +16,21 @@ Django
 
 Bootstrap
 
-##
+## Setup / Installation
+* Git clone repo
+```
+
+```
+
+### Live Link
+[Click Here To View]
+
+### Contact
+Phone No: **[+254 797109193](tel:+254797109193)**
+Email: **[babrakiyai080@gmail.com](mailto:babrakiyai080@gmail.com)**
+
+
+### License
+This project is under:  
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](/LICENSE)
 
