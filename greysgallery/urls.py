@@ -15,8 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
-from gallery.views import add_gallery_view
-from gallery.views import gallery_view
+from django.conf.urls import include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
