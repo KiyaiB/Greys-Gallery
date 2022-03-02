@@ -12,22 +12,45 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 import os
 from pathlib import Path
 from tempfile import template
+import django_heroku
+import dj_database_url
+from decouple import config,Csv
 import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/1.9/howto/static-files/
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_URL = '/static/'
+
+# Extra places for collectstatic to find static files.
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
+
+MODE=config("MODE", default="dev")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-h8m&y#n*0x8!pzr5_$*$n@)cha&1p@d+6t#-2+k=+qbs0a3yk0'
+SECRET_KEY = config('django-insecure-h8m&y#n*0x8!pzr5_$*$n@)cha&1p@d+6t#-2+k=+qbs0a3yk0')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = []
+cloudinary.config = {
+# copied form dashboard
+
+    'CLOUD_NAME': 'greyzgyzer',
+    'API_KEY': '411937695696693',
+    'API_SECRET': 'rGIIGGRsK_5_Pz9e4ijR0Vy67rc',
+}
 
 
 # Application definition
@@ -45,10 +68,14 @@ INSTALLED_APPS = [
     'bootstrap3',
     'greysgallery',
     'cloudinary',
-    'cloudinary_storage'
+    'cloudinary_storage',
+    'django-heroku',
 ]
 
 MIDDLEWARE = [
+    # Simplified static file serving.
+    # https://warehouse.python.org/project/whitenoise/
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -81,8 +108,9 @@ WSGI_APPLICATION = 'greysgallery.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
+if config('MODE')=="dev":
 
-DATABASES = {
+ DATABASES = {
    'default': {
        'ENGINE': 'django.db.backends.postgresql',
        'NAME': 'gallery',
@@ -92,6 +120,19 @@ DATABASES = {
        'PORT': '5432'
    }
 }
+
+# production
+else:
+   DATABASES = {
+       'default': dj_database_url.config(
+           default=config('DATABASE_URL')
+       )
+   }
+
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(db_from_env)
+
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
 
 
 # Password validation
@@ -132,6 +173,17 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
+# Simplified static file serving.
+# https://warehouse.python.org/project/whitenoise/
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# configuring the location for media
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# Configure Django App for Heroku.
+django_heroku.settings(locals())
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
@@ -143,9 +195,3 @@ Media_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
-CLOUDINARY_STORAGE = {
-# copied form dasshboard
-    'CLOUD_NAME': 'greyzgyzer',
-    'API_KEY': '411937695696693',
-    'API_SECRET': 'rGIIGGRsK_5_Pz9e4ijR0Vy67rc',
-}

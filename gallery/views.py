@@ -10,11 +10,11 @@ def home(request):
 
 def search_photos_category(request):
   if 'photo' in request.GET and request.GET["photo"]:
-    search_term = request.GET.get("photo")
-    searched_photos = Photo.search_photos_by_category(search_term)
+    search_term = request.GET.get["photo"]
+    searched_photos = Photo.search_photos_by_category[search_term]
     message = f"{search_term}"
 
-    return render(request, 'search.html', {"message":message,"photos":searched_photos})
+    return render[request, 'search.html', {"message":message,"photos":searched_photos}]
 
   else:
     message = 'You have not searched for any term'
@@ -22,7 +22,7 @@ def search_photos_category(request):
   
   
 def photos(request):
-  photos =Photo.objects.all().order_by("-posted_at")
+  photos = Photo.objects.all().order_by[("date-time")]
   location = Location.objects.all()
   return render(request,'photos.html',{'photos':photos, 'location':location})
 
